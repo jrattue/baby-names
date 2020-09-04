@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid max-width">
+
+    {% for gender,years in top %}
+        <div class="row">
+            <div class="col-12">
+                <h3>Top 25 {{ gender == 'M' ? 'Male' : 'Female' }} names</h3>
+            </div>
+        </div>
+        <div class="row">
+            {% for year,names in years %}
+                <div class="col-3">
+                    <h4>{{ year }}</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Count</th>
+                            <th>Name</th>
+                        </tr>
+                    {% for name in names %}
+                        <tr>
+                            <td>{{ name.rank }}</td>
+                            <td>{{ name.count }}</td>
+                            <td>{{ name.name }}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+@import "~react-vis/dist/style.css";
+
+@import "~bootstrap/scss/functions";
+
+
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+
+body {
+    background-color: lightgray;
+}
+
+$max-width: 73.13rem; // 1170px
+.max-width{
+    max-width: $max-width;
+}
+
+.autocomplete-options{
+    position: absolute;
+    animation: 0;
+    background: white;
+    width: 300px;
+    padding: 10px;
+
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+}
