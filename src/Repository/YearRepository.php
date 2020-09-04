@@ -38,7 +38,7 @@ class YearRepository extends ServiceEntityRepository
             y.`rank` > 0 AND
             n.gender = :gender
         ORDER BY y.`rank` ASC 
-        LIMIT 25";
+        LIMIT 10";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam('gender', $gender);

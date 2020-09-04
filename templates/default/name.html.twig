@@ -2,9 +2,26 @@
 
 {% block body %}
     <div class="container-fluid max-width">
-        <div class="row">
+        <div class="row name-details">
             <div class="col-12">
-                {{ dump(name) }}
+                <h2>{{ name.name }}</h2>
+                <p>Rankings for {{ name.name }} for {{ name.genderHuman }} babies for each year</p>
+
+                <table class="table">
+                    <tr>
+                        <th>Year</th>
+                        <th>Rank</th>
+                        <th>Count</th>
+                    </tr>
+                    {% for year in name.years %}
+                        <tr {{ topYear == year.year ? 'class="top"' }}>
+                            <td>{{ year.year }}</td>
+                            <td>{{ year.rank }}</td>
+                            <td>{{ year.count|number_format }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
             </div>
         </div>
     </div>

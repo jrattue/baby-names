@@ -19,19 +19,16 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/top-names")
+     * @Route("/top-names/{gender}")
      */
-    public function topNames(EntityManagerInterface $em)
+    public function topNames(EntityManagerInterface $em, $gender)
     {
         $top = [];
 
         $years = range(2019, 1996, -1);
-        $genders = [Name::GENDER_MALE, Name::GENDER_FEMALE];
 
         foreach ($years as $year){
-            foreach ($genders as $gender){
-                $top[$gender][$year] = $em->getRepository(Year::class)->getTop($gender, $year);
-            }
+            $top[$gender][$year] = $em->getRepository(Year::class)->getTop($gender, $year);
         }
 
         return $this->render('default/top.html.twig', [
@@ -40,12 +37,20 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/details/{name}")
+     * @Route("/details/{id}")
      */
     public function name(Name $name)
     {
+        $topYear = null;
+
+        foreach ($name->getYears() as $year){
+            if(!$topYear) $topYear = $year;
+            if($year->getRank() < $topYear->getRank()) $topYear = $year;
+        }
+
         return $this->render('default/name.html.twig', [
-            'name' => $name
+            'name' => $name,
+            'topYear' => $topYear->getYear()
         ]);
     }
 }

@@ -8,6 +8,13 @@
         {% endblock %}
     </head>
     <body>
+        <div class="container-fluid max-width">
+            <nav>
+                <a href="{{ path('app_default_index') }}" class="mr-2">Graph of names</a>
+                <a href="{{ path('app_default_topnames', {gender: 'm'}) }}" class="mr-2">Top male names</a>
+                <a href="{{ path('app_default_topnames', {gender: 'f'}) }}" class="mr-2">Top female names</a>
+            </nav>
+        </div>
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

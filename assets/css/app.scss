@@ -2,17 +2,17 @@
 
 @import "~bootstrap/scss/functions";
 
-
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/type";
-@import "~bootstrap/scss/images";
+//@import "~bootstrap/scss/images";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/tables";
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/utilities/spacing";
 
 body {
     background-color: lightgray;
@@ -23,16 +23,53 @@ $max-width: 73.13rem; // 1170px
     max-width: $max-width;
 }
 
-.autocomplete-options{
-    position: absolute;
-    animation: 0;
-    background: white;
-    width: 300px;
-    padding: 10px;
+.graph {
+    .autocomplete-options {
+        position: absolute;
+        animation: 0;
+        background: white;
+        width: 300px;
+        padding: 10px;
+        z-index: 999;
 
-    ul{
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+    }
+
+    ul.names {
         padding: 0;
         margin: 0;
         list-style: none;
+
+        li {
+            border: 1px solid grey;
+            padding: 8px;
+            text-align: center;
+            margin-bottom: 8px;
+
+            .names--cta {
+                display: flex;
+                justify-content: center;
+
+                a:first-of-type {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    input{
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+.name-details{
+    .top{
+        td {
+            font-weight: bold;
+        }
     }
 }
