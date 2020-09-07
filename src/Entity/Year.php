@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\YearRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass=YearRepository::class)
@@ -32,7 +33,6 @@ class Year
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"front_end"})
      */
     private $rank;
 
@@ -69,6 +69,16 @@ class Year
         $this->count = $count;
 
         return $this;
+    }
+
+    /**
+     * @Groups({"front_end"})
+     * @SerializedName("rank")
+     */
+    public function getRankWithoutZero()
+    {
+        if($this->rank == 0) return 6000;
+        return $this->rank;
     }
 
     public function getRank(): ?int

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>{% block title %}Baby names!{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -11,11 +11,15 @@
     </head>
     <body>
         <div class="container-fluid max-width">
-            <nav>
-                <a href="{{ path('app_default_index') }}" class="mr-2">Graph of names</a>
-                <a href="{{ path('app_default_topnames', {gender: 'm'}) }}" class="mr-2">Top male names</a>
-                <a href="{{ path('app_default_topnames', {gender: 'f'}) }}" class="mr-2">Top female names</a>
-            </nav>
+            <header>
+                <span class="menu-toggle">Menu</span>
+                <nav>
+                    <a href="{{ path('app_default_index') }}" class="mr-2">Graph of names</a>
+                    <a href="{{ path('app_default_topnames', {gender: 'm'}) }}" class="mr-2">Top male names</a>
+                    <a href="{{ path('app_default_topnames', {gender: 'f'}) }}" class="mr-2">Top female names</a>
+                    <a href="{{ path('app_default_namesforletter') }}" class="mr-2">Top names per letter</a>
+                </nav>
+            </header>
         </div>
         {% block body %}{% endblock %}
         {% block javascripts %}

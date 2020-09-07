@@ -47,6 +47,36 @@ class YearRepository extends ServiceEntityRepository
         return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
 
     }
+
+    public function getTopForLetter($letter, $year, $gender)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT
+            n.name, 
+            n.gender, 
+            y.rank, 
+            y.count
+        FROM
+            `year` as y
+        JOIN `name` as n on
+            n.id = y.name_id 
+        where
+            y.`year` = :year AND
+            y.`rank` > 0 AND
+            n.gender = :gender AND 
+            n.name LIKE :letter
+        ORDER BY y.`rank` ASC 
+        LIMIT 20";
+
+        $stmt = $conn->prepare($sql);
+        $letterLike = $letter."%";
+        $stmt->bindParam('gender', $gender);
+        $stmt->bindParam('year', $year);
+        $stmt->bindParam('letter', $letterLike);
+        $stmt->execute();
+        return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+    }
     
     // /**
     //  * @return Year[] Returns an array of Year objects

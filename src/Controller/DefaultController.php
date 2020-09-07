@@ -53,4 +53,29 @@ class DefaultController extends AbstractController
             'topYear' => $topYear->getYear()
         ]);
     }
+
+    /**
+     * @Route("/names-for-letter/{letter}")
+     * @Route("/names-for-letter")
+     */
+    public function namesForLetter(EntityManagerInterface $em, $letter='a')
+    {
+        $year = 2019;
+        $letters = range('a', 'z');
+        if(!in_array($letter, $letters)) throw $this->createNotFoundException('Not a letter');
+
+        $genders = [Name::GENDER_MALE, Name::GENDER_FEMALE];
+        $names = [];
+        foreach ($genders as $gender) {
+            $names[$gender] = $em->getRepository(Year::class)->getTopForLetter($letter, $year, $gender);
+        }
+
+        return $this->render('default/name_for_letter.html.twig', [
+            'result' => $names,
+            'year' => $year,
+            'currentLetter' => $letter,
+            'letters' => $letters,
+        ]);
+    }
+
 }

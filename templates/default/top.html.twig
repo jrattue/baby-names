@@ -6,13 +6,13 @@
     {% for gender,years in top %}
         <div class="row">
             <div class="col-12">
-                <h3>Top 10 {{ gender == 'm' ? 'Male' : 'Female' }} names</h3>
+                <h3 class="mt-3">Top 10 {{ gender == 'm' ? 'Male' : 'Female' }} names</h3>
             </div>
         </div>
         <div class="row">
             {% for year,names in years %}
                 <div class="col-12 col-md-3">
-                    <h4>{{ year }}</h4>
+                    <h4 class="mt-3">{{ year }}</h4>
                     <table class="table">
                         <tr>
                             <th>Rank</th>
