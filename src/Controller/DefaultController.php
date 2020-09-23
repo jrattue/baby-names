@@ -44,8 +44,10 @@ class DefaultController extends AbstractController
         $topYear = null;
 
         foreach ($name->getYears() as $year){
-            if(!$topYear) $topYear = $year;
-            if($year->getRank() < $topYear->getRank()) $topYear = $year;
+            if($year->getRank() > 0) {
+                if (!$topYear) $topYear = $year;
+                if ($year->getRank() < $topYear->getRank()) $topYear = $year;
+            }
         }
 
         return $this->render('default/name.html.twig', [
