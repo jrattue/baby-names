@@ -23,25 +23,25 @@ class Name
      * @ORM\Column(type="integer")
      * @Groups({"front_end"})
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"front_end"})
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @ORM\Column(type="string", length=4)
      */
-    private $gender;
+    private ?string $gender = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Year::class, mappedBy="name", orphanRemoval=true)
      * @ORM\OrderBy({"year"="DESC"})
      * @Groups({"front_end"})
      */
-    private $years;
+    private Collection $years;
 
     public function __construct()
     {
@@ -69,7 +69,7 @@ class Name
      * @Groups({"front_end"})
      * @SerializedName("gender")
      */
-    public function getGenderHuman()
+    public function getGenderHuman(): string
     {
         return $this->getGender() == self::GENDER_MALE ? 'Male' : 'Female';
     }

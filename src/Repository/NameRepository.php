@@ -20,7 +20,10 @@ class NameRepository extends ServiceEntityRepository
         parent::__construct($registry, Name::class);
     }
 
-    public function findForSearch($term)
+    /**
+     * @return array<array>
+     */
+    public function findForSearch(string $term): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -31,7 +34,7 @@ class NameRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $stmt->bindParam('term', $term);
         $stmt->execute();
-        return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        return $stmt->fetchAllAssociative();
 
     }
 

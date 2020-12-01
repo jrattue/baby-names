@@ -35,11 +35,7 @@ export default class App extends React.Component {
 
     removeName(nameId){
 
-        console.log(nameId);
-        console.log(this.state.names);
-
         const names = this.state.names.filter((name) => {
-            console.log(name);
             return !(name.id === nameId);
         })
 
@@ -80,7 +76,6 @@ export default class App extends React.Component {
 
     updateWindowDimensions() {
         const container = document.querySelector('.graph-container');
-        console.log(container.clientWidth);
         this.setState({ width: (container.clientWidth - 20) });
     };
 

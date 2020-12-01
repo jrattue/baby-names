@@ -1,0 +1,35 @@
+header{
+    span {
+        display: block;
+        text-align: right;
+        text-transform: uppercase;
+
+        @include media-breakpoint-up(sm) {
+            display: none;
+        }
+    }
+
+    nav{
+        display: none;
+
+        &.active{
+            display: block;
+        }
+
+        @include media-breakpoint-up(sm) {
+            display: block;
+        }
+
+        a{
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+
+            @include media-breakpoint-up(sm) {
+                display: inline-block;
+                width: auto;
+            }
+        }
+
+    }
+}

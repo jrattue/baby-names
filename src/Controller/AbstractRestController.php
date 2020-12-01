@@ -11,7 +11,11 @@ use Symfony\Component\Validator\ConstraintViolationList;
 class AbstractRestController extends AbstractFOSRestController
 {
 
-    public function createView($data, $groups = ['front_end']): View
+    /**
+     * @param array<array>|object $data
+     * @param array<string> $groups
+     */
+    public function createView($data, array $groups = ['front_end']): View
     {
         $context = new Context();
         $view = $this->view($data);

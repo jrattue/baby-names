@@ -1,12 +1,12 @@
-import '../css/app.scss';
+import '../scss/app.scss';
 
 import App from './react/App';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-let element = React.createElement(App);
 const container = document.getElementById('root');
 if(container) {
+    let element = React.createElement(App);
     ReactDOM.render(element,container);
 }
 

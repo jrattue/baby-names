@@ -17,30 +17,30 @@ class Year
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"front_end"})
      */
-    private $year;
+    private ?int $year = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"front_end"})
      */
-    private $count;
+    private ?int $count = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $rank;
+    private ?int $rank = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Name::class, inversedBy="years")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $name;
+    private ?Name $name = null;
 
     public function getId(): ?int
     {
@@ -75,7 +75,7 @@ class Year
      * @Groups({"front_end"})
      * @SerializedName("rank")
      */
-    public function getRankWithoutZero()
+    public function getRankWithoutZero(): ?int
     {
         if($this->rank == 0) return 6000;
         return $this->rank;

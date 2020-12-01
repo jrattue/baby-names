@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Name;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NameRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,26 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiController extends AbstractRestController
 {
 
-    protected $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * @Route("/search/{term}", methods={"GET"}, format="json")
      */
-    public function index($term)
+    public function index(string $term, NameRepository $repository): Response
     {
-        $result = $this->em->getRepository(Name::class)->findForSearch($term);
+        $result = $repository->findForSearch($term);
         return $this->handleView($this->createView($result));
     }
 
     /**
      * @Route("/details/{id}", methods={"GET"}, format="json")
      */
-    public function details(Name $name)
+    public function details(Name $name): Response
     {
         return $this->handleView($this->createView($name));
     }

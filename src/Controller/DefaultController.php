@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Name;
-use App\Entity\Year;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\YearRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
@@ -13,7 +13,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('default/index.html.twig');
     }
@@ -21,14 +21,14 @@ class DefaultController extends AbstractController
     /**
      * @Route("/top-names/{gender}")
      */
-    public function topNames(EntityManagerInterface $em, $gender)
+    public function topNames(YearRepository $repo, string $gender): Response
     {
         $top = [];
 
         $years = range(2019, 1996, -1);
 
         foreach ($years as $year){
-            $top[$gender][$year] = $em->getRepository(Year::class)->getTop($gender, $year);
+            $top[$gender][$year] = $repo->getTop($gender, $year);
         }
 
         return $this->render('default/top.html.twig', [
@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/details/{id}")
      */
-    public function name(Name $name)
+    public function name(Name $name): Response
     {
         $topYear = null;
 
@@ -52,7 +52,7 @@ class DefaultController extends AbstractController
 
         return $this->render('default/name.html.twig', [
             'name' => $name,
-            'topYear' => $topYear->getYear()
+            'topYear' => ($topYear ? $topYear->getYear(): null)
         ]);
     }
 
@@ -60,7 +60,7 @@ class DefaultController extends AbstractController
      * @Route("/names-for-letter/{letter}")
      * @Route("/names-for-letter")
      */
-    public function namesForLetter(EntityManagerInterface $em, $letter='a')
+    public function namesForLetter(YearRepository $repo, string $letter='a'): Response
     {
         $year = 2019;
         $letters = range('a', 'z');
@@ -69,7 +69,7 @@ class DefaultController extends AbstractController
         $genders = [Name::GENDER_MALE, Name::GENDER_FEMALE];
         $names = [];
         foreach ($genders as $gender) {
-            $names[$gender] = $em->getRepository(Year::class)->getTopForLetter($letter, $year, $gender);
+            $names[$gender] = $repo->getTopForLetter($letter, $year, $gender);
         }
 
         return $this->render('default/name_for_letter.html.twig', [

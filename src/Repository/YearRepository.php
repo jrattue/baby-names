@@ -20,7 +20,10 @@ class YearRepository extends ServiceEntityRepository
         parent::__construct($registry, Year::class);
     }
 
-    public function getTop($gender, $year)
+    /**
+     * @return array<array>
+     */
+    public function getTop(string $gender, int $year): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -44,11 +47,14 @@ class YearRepository extends ServiceEntityRepository
         $stmt->bindParam('gender', $gender);
         $stmt->bindParam('year', $year);
         $stmt->execute();
-        return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        return $stmt->fetchAllAssociative();
 
     }
 
-    public function getTopForLetter($letter, $year, $gender)
+    /**
+     * @return array<array>
+     */
+    public function getTopForLetter(string $letter, int $year, string $gender): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -75,7 +81,7 @@ class YearRepository extends ServiceEntityRepository
         $stmt->bindParam('year', $year);
         $stmt->bindParam('letter', $letterLike);
         $stmt->execute();
-        return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        return $stmt->fetchAllAssociative();
     }
     
     // /**

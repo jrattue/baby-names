@@ -1,0 +1,16 @@
+body {
+    background-color: lightgray;
+}
+
+$max-width: 73.13rem; // 1170px
+.max-width{
+    max-width: $max-width;
+}
+
+.name-details{
+    .top{
+        td {
+            font-weight: bold;
+        }
+    }
+}
