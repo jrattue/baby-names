@@ -43,11 +43,11 @@ class YearRepository extends ServiceEntityRepository
         ORDER BY y.`rank` ASC 
         LIMIT 10";
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam('gender', $gender);
-        $stmt->bindParam('year', $year);
-        $stmt->execute();
-        return $stmt->fetchAllAssociative();
+        $res = $conn->executeQuery($sql, [
+            'gender'=> $gender,
+            'year' => $year
+        ]);
+        return $res->fetchAllAssociative();
 
     }
 
@@ -75,13 +75,15 @@ class YearRepository extends ServiceEntityRepository
         ORDER BY y.`rank` ASC 
         LIMIT 20";
 
-        $stmt = $conn->prepare($sql);
         $letterLike = $letter."%";
-        $stmt->bindParam('gender', $gender);
-        $stmt->bindParam('year', $year);
-        $stmt->bindParam('letter', $letterLike);
-        $stmt->execute();
-        return $stmt->fetchAllAssociative();
+
+        $res = $conn->executeQuery($sql, [
+            'gender' => $gender,
+            'year' => $year,
+            'letter' => $letterLike,
+        ]);
+
+        return $res->fetchAllAssociative();
     }
     
     // /**

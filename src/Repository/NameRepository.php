@@ -31,10 +31,9 @@ class NameRepository extends ServiceEntityRepository
 
         $term = $term."%";
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam('term', $term);
-        $stmt->execute();
-        return $stmt->fetchAllAssociative();
+        return $conn->executeQuery($sql, [
+            'term' => $term
+        ])->fetchAllAssociative();
 
     }
 
