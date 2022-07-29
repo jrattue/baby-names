@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+    const LATEST_YEAR = 2020;
+
     /**
      * @Route("/")
      */
@@ -25,7 +27,7 @@ class DefaultController extends AbstractController
     {
         $top = [];
 
-        $years = range(2019, 1996, -1);
+        $years = range(self::LATEST_YEAR, 1996, -1);
 
         foreach ($years as $year){
             $top[$gender][$year] = $repo->getTop($gender, $year);
@@ -62,7 +64,7 @@ class DefaultController extends AbstractController
      */
     public function namesForLetter(YearRepository $repo, string $letter='a'): Response
     {
-        $year = 2019;
+        $year = self::LATEST_YEAR;
         $letters = range('a', 'z');
         if(!in_array($letter, $letters)) throw $this->createNotFoundException('Not a letter');
 

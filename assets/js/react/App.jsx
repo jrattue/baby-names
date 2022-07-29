@@ -65,12 +65,12 @@ export default class App extends React.Component {
         })
     }
 
-    componentDidMount() { //add listener to do thing
+    componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
     }
 
-    componentWillUnmount() { //remove event listener after done doing thing
+    componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
