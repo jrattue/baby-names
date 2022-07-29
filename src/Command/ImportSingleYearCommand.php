@@ -20,6 +20,8 @@ class ImportSingleYearCommand extends Command
     {
         parent::__construct();
         $this->connection = $connection;
+
+        $this->connection->getConfiguration()->setSQLLogger(null);
     }
 
     protected function configure(): void
@@ -46,20 +48,21 @@ class ImportSingleYearCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $csv = Reader::createFromPath($filePath)->setHeaderOffset(0);
 
-        $findNameSth = $this->connection->prepare('SELECT id FROM `name` where `name` = :name');
-        $nameSth = $this->connection->prepare('INSERT INTO name (`name`, `gender`) VALUES (:name, :gender)');
-        $yearSth = $this->connection->prepare('INSERT INTO year (`year`, `count`, `rank`, `name_id`) VALUES (:year, :count, :rank, :name_id)');
+        $findNameSql = 'SELECT id FROM `name` where `name` = :name AND gender = :gender';
+        $nameSql = 'INSERT INTO name (`name`, `gender`) VALUES (:name, :gender)';
+        $yearSql = 'INSERT INTO year (`year`, `count`, `rank`, `name_id`) VALUES (:year, :count, :rank, :name_id)';
 
         foreach ($csv as $record) {
-            $findNameSth->bindValue(':name', $record['Name'], \PDO::PARAM_STR);
-            $findNameSth->execute();
-            $nameId = $findNameSth->fetchOne();
-            if(!$nameId){
-                $nameSth->bindValue(':name', $record['Name'], \PDO::PARAM_STR);
-                $nameSth->bindValue(':gender', $gender, \PDO::PARAM_STR);
-                $nameSth->execute();
-                $output->write("+");
+            $nameId = $this->connection->executeQuery($findNameSql, [
+                'name' => $record['Name'],
+                'gender' => $gender
+            ])->fetchOne();
 
+            if(!$nameId){
+                $this->connection->executeQuery($nameSql, [
+                    'name' => $record['Name'],
+                    'gender' => $gender
+                ]);
                 $nameId = $this->connection->lastInsertId();
             }
 
@@ -69,13 +72,14 @@ class ImportSingleYearCommand extends Command
             if($count == ":") $count = 0;
             if($rank == ":") $rank = 0;
 
-            $yearSth->bindValue(':year', $year, \PDO::PARAM_INT);
-            $yearSth->bindValue(':count', $count, \PDO::PARAM_INT);
-            $yearSth->bindValue(':rank', $rank, \PDO::PARAM_INT);
-            $yearSth->bindValue(':name_id', (int)$nameId, \PDO::PARAM_INT);
-            $yearSth->execute();
+            $this->connection->executeQuery($yearSql, [
+                'year' => $year, \PDO::PARAM_INT,
+                'count' => $count, \PDO::PARAM_INT,
+                'rank' => $rank, \PDO::PARAM_INT,
+                'name_id' => (int)$nameId, \PDO::PARAM_INT,
+            ]);
 
-            //$output->writeln("");
+            $output->write(".");
         }
 
         $io->success('Import complete');
