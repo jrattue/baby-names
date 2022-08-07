@@ -41,7 +41,7 @@ class YearRepository extends ServiceEntityRepository
             y.`rank` > 0 AND
             n.gender = :gender
         ORDER BY y.`rank` ASC 
-        LIMIT 10";
+        LIMIT 50";
 
         $res = $conn->executeQuery($sql, [
             'gender'=> $gender,
