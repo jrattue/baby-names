@@ -41,9 +41,10 @@ class ImportSingleYearCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // CHANGE THESE
-        $year = 2020;
-        $gender = Name::GENDER_MALE;
-        $filePath = __DIR__.'/../../public/data/boys-2020.csv';
+        $year = 2022;
+        $gender = Name::GENDER_FEMALE;
+        $filePath = __DIR__.'/../../public/girls_2022.csv';
+        // END CHANGE
 
         $io = new SymfonyStyle($input, $output);
         $csv = Reader::createFromPath($filePath)->setHeaderOffset(0);

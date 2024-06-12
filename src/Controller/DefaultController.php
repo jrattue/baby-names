@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    const LATEST_YEAR = 2020;
+    const LATEST_YEAR = 2022;
 
     /**
      * @Route("/")

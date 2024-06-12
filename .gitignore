@@ -20,3 +20,5 @@ yarn-error.log
 
 !/public/build/prod
 composer.phar
+
+/public/*.csv
